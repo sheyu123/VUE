@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root"> 
+        姓:<input type="text" v-model:value="firstName">
+        名:<input type="text" v-model:value="lastName">
+        <p>全名:{{firstName}}-{{lastName}}</p>
+    </div>
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        //可以自定义按键别名（设置回车的别名为huiche）
+        Vue.config.keyCodes.huiche = 13;
+
+       const vm = new Vue({
+            el: "#root",
+            data: {
+                firstName:"张",
+                lastName:'三',
+            },
+            methods: {
+                
+            }
+        })
+
+    </script>
+</body>
+
+</html>

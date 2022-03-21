@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href='./favicon.ico' type="image/x-icon">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+        let number = 18;
+        //创建一个对象
+        let v = {
+            name: '刘德华',
+            sex: '男',
+        }
+
+        //通过Object.defineProperty 操作对象
+        //添加属性
+        Object.defineProperty(v, 'age', {
+            
+            //是否能被枚举
+            // enumerable: true,
+            //能否被删除
+            // configurable: true,
+
+            //当有人读取了v的 age属性值，就会调用get()方法，返回age的值
+            get:function() {
+                console.log('正在读取数据');
+                return number;
+            },
+
+            //当有人修改了 v 的 age的值,就会调用set()方法, 切修改具体的值 
+            set:function(value){
+                console.log('正在修改数据'+value);
+                number = value;
+            }
+
+        });
+
+        //遍历key 值
+        //console.log(Object.keys(v));//(2) ['name', 'sex']
+    </script>
+</body>
+
+</html>

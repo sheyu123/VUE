@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        *{
+            margin: 10px;
+        }
+        .stop1{
+            background-color: aqua;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center ;
+            position: relative;
+
+        }
+        .stop2{
+            background-color: yellow;
+            width: 30%;
+            height: 30%;
+            /* position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%); */
+        }
+        ul{
+            width: 200px;
+            height: 200px;
+            background-color: rebeccapurple;
+            overflow-y: auto;
+        }
+        ul>li{
+            width: 200px;
+            height: 100px;
+            background-color: blue;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>学校名称：{{name}}</h2>
+        <!-- <a href="http://www.baidu.com" v-on:click.prevent = 'showInfo1'>点我去百度</a> -->
+        <!-- 简写 -->
+        <a href="http://www.baidu.com" @click.prevent='showInfo1'>点我去百度</a>
+
+        <!-- 触发了事件冒泡 --> 
+        <div class="stop1" @click = 'showInfo1'>
+            <!-- <div class="stop2" @click.stop = 'showInfo1'>1</div> -->
+            <!-- 修饰符可以配合一起使用 阻止冒泡和默认行为 -->
+            <a href="http://www.baidu.com" @click.stop.prevent = 'showInfo1'>123</a>
+        </div>
+
+
+        <!-- 限制按钮触发次数 -->
+        <button @click.once = 'showInfo1'>点击输出信息</button>
+
+        <!-- 捕获事件1 -->
+        <div class="stop1" @click.capture = 'mes1(1)'>
+            1
+            <div class="stop2" @click = 'mes1(2)'>2</div>
+        </div>
+
+        <!-- self -->
+        <div class="stop2" @click.self = 'str'>
+            1
+            <button @click = 'str'>2</button>
+        </div>
+
+        <ul @wheel.passive = 'fn'>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <!-- 
+        Vue中的事件修饰符：
+                1.prevent：阻止默认事件（常用）；
+                2.stop：阻止事件冒泡（常用）；
+                3.once：事件只触发一次（常用）； 
+                4.capture：使用事件的捕获模式；
+                5.self：只有event.target是当前操作的元素时才触发事件；
+                6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕；
+		-->
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定,存能够修改的值
+            data: {
+                name: '好运来',
+            },
+            methods: {
+                showInfo1(event) {
+                    // event.preventDefault(); 阻止默认行为
+                    alert('你好明天！');
+                    //console.log(vm === this);//此处的this是vue
+                },
+                mes1(number){
+                    console.log(number);
+                },
+                str(e){
+                    console.log(e.target);
+                },
+                fn(){
+                    for(let i = 0; i<1000000; i++){
+                        console.log('a');
+                    }
+                   console.log('dd'); 
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

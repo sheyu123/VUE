@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href='./favicon.ico' type="image/x-icon">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <!-- F
+			MVVM模型
+						1. M：模型(Model) ：data中的数据
+						2. V：视图(View) ：模板代码
+						3. VM：视图模型(ViewModel)：Vue实例
+			观察发现：
+						1.data中所有的属性，最后都出现在了vm身上。
+						2.vm身上所有的属性 及 Vue原型上所有属性，在Vue模板中都可以直接使用。
+		-->
+    <!-- 准备好一个容器-->
+
+
+    <div id="root">
+        <!-- 简写 -->
+       <div>{{name}}</div>
+       <div>{{adress}}</div>
+       <div>{{_c}}</div>
+       <div>{{$refs}}</div>
+
+        <!-- 双向绑定v-model 只能用于输入型（有value）元素 -->
+        <!-- 错误写法： -->
+        <!-- <h2 v-model:x="name"></h2> -->
+
+    </div>
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        //实例化Vue
+       const vm = new Vue({
+       //指定容器
+           el:'#root',
+       //数据绑定
+           data:{
+               name:'好运来',
+               adress:'深圳',
+               a:123,
+           }
+       })
+       console.log(vm);
+
+    </script>
+</body>
+
+</html>

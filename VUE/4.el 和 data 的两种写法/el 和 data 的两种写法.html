@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href='./favicon.ico' type="image/x-icon">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+    data与el的2种写法
+            1.el有2种写法
+                            (1).new Vue时候配置el属性。
+                            (2).先创建Vue实例，随后再通过vm.$mount('#root')指定el的值。
+            2.data有2种写法
+                            (1).对象式
+                            (2).函数式
+                            如何选择：目前哪种写法都可以，以后学习到组件时，data必须使用函数式，否则会报错。
+            3.一个重要的原则：
+                            由Vue管理的函数，一定不要写箭头函数，一旦写了箭头函数，this就不再是Vue实例了。
+		-->
+    <!-- 准备好一个容器-->
+
+
+    <div id="root">
+        <!-- 简写 -->
+        <span>单项绑定</span>
+        <input type="text" :value="name"><br />
+        <span>双向绑定</span>
+        <input type="text" v-model="name">
+
+        <!-- 双向绑定v-model 只能用于输入型（有value）元素 -->
+        <!-- 错误写法： -->
+        <!-- <h2 v-model:x="name"></h2> -->
+
+    </div>
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        //实例化Vue
+        const v = new Vue({
+            //指定容器的第一种写法
+            // el: '#root',
+
+            //数据绑定的第一种写法
+            /* data: {
+                name: '好运来',
+            } */
+
+            //数据绑定的第二种写法（函数写法，注意：不能时箭头函数）
+            data: function() {
+                return {
+                    name: '好运来',
+                }
+            }
+
+        })
+
+        /* 指定容器的第二种写法
+        1. 实例化Vue, const v = new Vue();
+        2. 调用实例对象的 __proto__方法 */
+        console.log(v);//Vue
+        v.$mount('#root');
+
+    </script>
+</body>
+
+</html>
