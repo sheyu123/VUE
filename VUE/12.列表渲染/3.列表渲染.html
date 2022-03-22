@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.列表过滤</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <!-- 双向绑定收集用户的输入 -->
+        <input type="text" v-model="dataWord">
+        <ul>
+            <li v-for="(value,key) in fillPersons" :key="key">
+                {{value.name}}_{{value.age}}_{{value.sex}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        /*  new Vue({
+             //指定容器
+             el: '#root',
+             //数据绑定
+             data: {
+                 dataWord: '',
+                 persons: [
+                     {
+                         id: 1,
+                         name: '马冬梅',
+                         age: 18,
+                         sex: '女'
+                     },
+                     {
+                         id: 2,
+                         name: '周冬雨',
+                         age: 22,
+                         sex: '女'
+                     },
+                     {
+                         id: 3,
+                         name: '周杰伦',
+                         age: 28,
+                         sex: '男'
+                     },
+                     {
+                         id: 4,
+                         name: '温兆伦',
+                         age: 28,
+                         sex: '男'
+                     },
+                 ],
+                 //定义一个空数组用于接收过滤后的新数组来展示
+                 fillPersons: [],
+             },
+ 
+             //监视dateWord 属性的变化
+             watch: {
+                 //获得修改前后的值
+                 dataWord: {
+                     immediate:true,
+                     handler(newStr) {
+                         //过滤返回一个新数组
+                         this.fillPersons = this.persons.filter((value) => {
+                             return value.name.indexOf(newStr) !== -1;
+                         })
+                     }
+                 }
+             }
+ 
+         })
+  */
+
+
+        new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                dataWord: '',
+                persons: [
+                    {
+                        id: 1,
+                        name: '马冬梅',
+                        age: 18,
+                        sex: '女'
+                    },
+                    {
+                        id: 2,
+                        name: '周冬雨',
+                        age: 22,
+                        sex: '女'
+                    },
+                    {
+                        id: 3,
+                        name: '周杰伦',
+                        age: 28,
+                        sex: '男'
+                    },
+                    {
+                        id: 4,
+                        name: '温兆伦',
+                        age: 28,
+                        sex: '男'
+                    },
+                ],
+
+
+            },
+            //通过计算属性实现
+            computed: {
+                fillPersons() {
+                    return this.persons.filter((value) => {
+                        return value.name.indexOf(this.dataWord) !== -1;
+                    })
+                }
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>

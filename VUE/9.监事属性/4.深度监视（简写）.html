@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.深度监视（简写）</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>今天天气很{{info}}</h1>
+        <button @click='ChangeWeather'>切换天气</button>
+
+    </div>
+    <!-- 
+				深度监视：
+						(1).Vue中的watch默认不监测对象内部值的改变（一层）。
+						(2).配置deep:true可以监测对象内部值改变（多层）。
+				备注：
+						(1).Vue自身可以监测对象内部值的改变，但Vue提供的watch默认不可以！
+						(2).使用watch时根据数据的具体结构，决定是否采用深度监视。
+		 -->
+    <script>
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                isHot: true,
+
+            },
+            computed: {
+                info() {
+                    return this.isHot ? '炎热' : '凉爽';
+                },
+            },
+            methods: {
+                ChangeWeather() {
+                    this.isHot = !this.isHot;
+                },
+            },
+            //监视属性简写完整写法1
+            /*  watch: {
+                 //监视isHot对象
+                 isHot:{
+                     immediate:true, //初始化时让handle 调用一下
+                     //通过handle获得修改前后的值，isHot的值发生变化时调用
+                     handler(newStr,oldStr){
+                         console.log('isHot被修改了');
+                         console.log('修改前：'+oldStr);
+                         console.log('修改后：'+newStr);
+                     }
+                 }
+             } */
+
+            //监视属性简写2
+            /* watch: {
+                isHot(newStr, oldStr) {
+                    console.log('isHot被修改了');
+                    console.log('修改前：' + oldStr);
+                    console.log('修改后：' + newStr);
+                }
+            } */
+
+        })
+
+        //监视属性简写完整写法3
+        /* vm.$watch('isHot', {
+            //开启深度监视
+            deep: true,
+            //初始化时调用handler
+            immediate:true,
+            handler(newStr, oldStr) {
+                console.log('isHot被修改了');
+                console.log('修改前：' + oldStr);
+                console.log('修改后：' + newStr);
+            }
+        }) */
+
+        vm.$watch('isHot', function (newStr, oldStr) {
+            console.log('isHot被修改了');
+            console.log('修改前：' + oldStr);
+            console.log('修改后：' + newStr);
+        })
+
+    </script>
+</body>
+
+</html>

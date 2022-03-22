@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+   
+    <div id="root">
+
+        <div v-if=(1===1)>你好{{name}}</div>
+
+        <p>n的值是{{n}}</p>
+        <button @click='n++'>点我n+1</button>
+
+        <!-- v-show渲染 -->
+        <!-- <div v-show = (n==1)>我是1号</div>
+        <div v-show = (n==2)>我是2号</div>
+        <div v-show = (n==3)>我是3号</div> -->
+
+        <!-- v-if 渲染  注意：中间不能加其他元素节点，否则会报错-->
+        <div v-if=(n==1)>我是1号</div>
+        <div v-else-if=(n==2)>我是2号</div>
+        <div v-else-if=(n==3)>我是3号</div>
+        <div v-else>哈哈</div>
+
+        <!-- v-if 与 tempalte 的使用 -->
+        <template v-if=(n===1)>
+            <div>我是1号</div>
+            <div>我是2号</div>
+            <div>我是3号</div>
+        </template>
+
+    </div>
+
+    <script>
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                name: '明天',
+                n: 0,
+            },
+
+            methods: {
+
+            },
+
+        })
+
+    </script>
+</body>
+
+</html>

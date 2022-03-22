@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.天气案例(监视属性)</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>今天天气很{{info}}</h1>
+        <button @click='ChangeWeather'>切换天气</button>
+    </div>
+    <!-- 
+				监视属性watch：
+					1.当被监视的属性变化时, 回调函数自动调用, 进行相关操作
+					2.监视的属性必须存在，才能进行监视！！
+					3.监视的两种写法：
+							(1).new Vue时传入watch配置
+							(2).通过vm.$watch监视
+		 -->
+    <script>
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                isHot: true,
+            },
+            computed: {
+                info() {
+                    return this.isHot ? '炎热' : '凉爽';
+                }
+            },
+            methods: {
+                ChangeWeather() {
+                    this.isHot = !this.isHot;
+                    this.x++;
+                }
+            },
+            //通过watch监视属性
+            /* watch: {
+                //监视isHot对象
+                isHot:{
+                    immediate:true, //初始化时让handle 调用一下
+                    //通过handle获得修改前后的值，isHot的值发生变化时调用
+                    handler(newStr,oldStr){
+                        console.log('isHot被修改了');
+                        console.log('修改前：'+oldStr);
+                        console.log('修改后：'+newStr);
+                    }
+                }
+            } */
+        })
+
+        //通过watch监视属性2
+        vm.$watch('isHot', {
+            immediate: true,
+            handler(newStr, oldStr) {
+                console.log('isHot被修改了');
+                console.log('修改前：' + oldStr);
+                console.log('修改后：' + newStr);
+            }
+        })
+
+    </script>
+</body>
+
+</html>

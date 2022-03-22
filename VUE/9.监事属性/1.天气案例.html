@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.天气案例</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>今天天气很{{info}},{{x}}</h1>
+        <!--
+            @xxx = yyy , yyy可以写一些简单的语句
+            @click = 'isHot = !isHot';
+        -->
+        <button @click='ChangeWeather'>切换天气</button>
+    </div>
+    <script>
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        new Vue({
+        //指定容器
+            el:'#root',
+        //数据绑定
+            data:{
+                isHot:true,
+                x:1,
+                // window,
+            },
+            computed: {
+                info(){
+                    return this.isHot? '炎热':'凉爽';
+                }
+            },
+            methods: {
+                ChangeWeather(){
+                    this.isHot = !this.isHot;
+                    this.x++;
+                }
+            }
+        })
+        
+    </script>
+</body>
+
+</html>
