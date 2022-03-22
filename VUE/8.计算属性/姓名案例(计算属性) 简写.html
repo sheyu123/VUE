@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例(计算属性)</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root"> 
+        姓:<input type="text" v-model:value="firstName">
+        名:<input type="text" v-model:value="lastName">
+        <!-- 插值语法中写入一个方法 -->
+        <!-- 当data 中的数据发生改变时，Vue会重新解析这个模板，从而重新调用一次这个方法 -->
+        <p>全名:{{fullName}}</p>
+        <p>全名:{{fullName}}</p>
+        <p>全名:{{fullName}}</p>
+        <p>全名:{{fullName}}</p>
+    </div>
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        //可以自定义按键别名（设置回车的别名为huiche）
+        Vue.config.keyCodes.huiche = 13;
+
+        new Vue({
+            el:'#root',
+            data:{
+                firstName:'张',
+                lastName:'三',
+            },
+            //计算属性
+            computed: {
+               /*  fullName:{
+                    //完整写法
+                    get(){
+                        return this.firstName + '-' + this.lastName;
+                    },
+                    set(value){
+                        const arr = value.splict('-');
+                        this.firstName = arr[0];
+                        this.lastName = arr[1];
+                    },
+                }, */
+
+                //当确定不修改只时，只需要读取(get)时，可以简写
+                fullName:function(){
+                    //get只有初次使用时被调用，然后会将get存入缓存中，只有get依赖的组件改动时，get才会重新被调用
+                    console.log('get被调用了'); 
+                    return this.firstName + '-' + this.lastName;
+                }
+            }
+        });
+        
+       
+           
+    </script>
+</body>
+
+</html>
