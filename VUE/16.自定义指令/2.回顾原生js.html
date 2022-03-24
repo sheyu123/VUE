@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bgc{
+           background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <button class="ipt">创建一个input框</button>
+    <script>
+        //获取时间对象
+        var ipt = document.querySelector('.ipt');
+        var div = document.querySelector('div');
+        //注册事件
+        ipt.addEventListener('click',function(){
+            //创建input元素
+            var ipt = document.createElement('input');
+            ipt.value = 10;
+            // ipt.classList.add('bgc')
+            ipt.className = 'bgc';
+            //插入input 
+            div.appendChild(ipt);
+            //改变父元素颜色
+            // ipt.parentElement.style.backgroundColor = 'yellow';
+            //改变父元素颜色
+             ipt.style.bac
+            //获取焦点
+            ipt.focus();
+
+    
+        });
+    </script>
+</body>
+</html>
