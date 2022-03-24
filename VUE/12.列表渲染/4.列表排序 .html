@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.列表排序 </title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <!-- 双向绑定收集用户的输入 -->
+        <input type="text" v-model="dataWord">
+        <ul>
+            <li v-for="(value,key) in fillPersons" :key="key">
+                {{value.name}}_{{value.age}}_{{value.sex}}
+            </li>
+        </ul>
+        <button @click='sortType = 2'>升序</button>
+        <button @click='sortType = 1'>降序</button>
+        <button @click='sortType = 0'>原顺序</button>
+    </div>
+
+    <script>
+
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                //给排序按钮定义类型 0原顺序 1降序 2升序
+                sortType: 0,
+                //定义空字符串用v-model 双向绑定
+                dataWord: '',
+                persons: [
+                    {
+                        id: 1,
+                        name: '马冬梅',
+                        age: 28,
+                        sex: '女'
+                    },
+                    {
+                        id: 2,
+                        name: '周冬雨',
+                        age: 22,
+                        sex: '女'
+                    },
+                    {
+                        id: 3,
+                        name: '周杰伦',
+                        age: 38,
+                        sex: '男'
+                    },
+                    {
+                        id: 4,
+                        name: '温兆伦',
+                        age: 48,
+                        sex: '男'
+                    },
+                ],
+
+            },
+            //通过计算属性实现
+            computed: {
+                //完整写法
+                /* fillPersons: {
+                    get() {
+                        //数组过滤
+                        const arr = this.persons.filter((val) => {
+                            //返回符合条件的结果
+                            return val.name.indexOf(this.dataWord) !== -1;
+                        });
+                        //判断用户按下的按钮 0原顺序 1降序 2升序
+                        if (this.sortType !== 0) {
+                            //对数组元素进行排序
+                            arr.sort((a,b) =>{
+                                //数组为1时进行降序，否则升序
+                                return this.sortType == 1? b.age - a.age : a.age - b.age;
+                            });
+                        };
+                        return arr;
+                    },
+                } */
+
+                //简写
+                fillPersons(){
+                    const arr = this.persons.filter((val) =>{
+                        return val.name.indexOf(this.dataWord) !== -1;
+                    });
+
+                    if(this.sortType !== 0){
+                        arr.sort((a,b) =>{
+                            return this.sortType == 1? b.age - a.age : a.age - b.age;
+                        });
+                    };
+                    return arr;
+                }
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>

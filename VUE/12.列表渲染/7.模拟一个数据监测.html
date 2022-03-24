@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let data = {
+            name: "好运来",
+            address: 'BeiJing',
+
+        }
+
+        //创建一个实例对象，用于监视data中属性的变化
+        const obs = new Observer(data);
+        //定义一个实例对象vm
+        let vm = {};
+        vm._data = data = obs;
+        //创建构造函数
+        function Observer(obj){
+            //获得key值
+            const keys = Object.keys(obj);
+            //遍历
+            keys.forEach((k)=>{
+                Object.defineProperty(this,k,{
+                   get(){
+                       //obj[k]:获得当前属性的属性值
+                       return obj[k];
+                   },
+                   set(val){
+                       console.log(`${k}被修改了`);
+                       //把修改的属性值重新赋值
+                       obj[k] = val;
+                   }
+                });
+            })
+        }
+
+
+        /* const obs = new Observer(data);
+        console.log(obs);
+        function Observer(obj){
+            //汇总对象中的所有属性形成一个数组(键值)
+            const keys = Object.keys(obj);
+            keys.forEach((k) =>{
+                // Object.defineProperty() 方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
+                Object.defineProperty(this,k,{
+                  get(){
+                    return obj[k];
+                  },
+                  set(val){
+                    obj[k] = val;
+                  }
+                })
+                
+            })
+        } */
+
+
+
+
+    </script>
+</body>
+
+</html>

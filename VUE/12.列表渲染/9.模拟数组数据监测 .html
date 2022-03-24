@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.模拟数组数据监测 </title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>学校信息</h2>
+        <p>学校名称：{{name}}</p>
+        <p>学校名称：{{address}}</p>
+        <hr />
+        <h2>学生信息</h2>
+        <button @click='addString'>添加一个属性，默认值是男</button>
+        <p>姓名：{{student.name}}</p>
+        <p>年龄：真实年龄：{{student.age.rAge}} 虚假年龄：{{student.age.rAge}}</p>
+        <!-- v-if = 'student.sex' (当这个属性存在时显示) -->
+        <p v-if='student.sex'>性别：{{student.sex}}</p>
+        <hr />
+        <ul>
+            <!-- 循环获得数组对象 -->
+            <li v-for='(val,index) in student.friends' :key="index">
+                {{val.name}}--{{val.age}}
+            </li>
+        </ul>
+        <ul>
+            <!-- 循环获得数组 -->
+            <li v-for='(val,index) in student.hobby' :key="index">
+                {{val}}
+                
+            </li>
+        </ul>
+        <!-- 添加一个属性为学习，并替换玩游戏 -->
+        <button @click='addStudy'>添加一个属性为学习</button>
+    </div>
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                name: 'atguigu',
+                address: '北京',
+                student: {
+                    name: 'tom',
+                    age: {
+                        rAge: 40,
+                        sAge: 29,
+                    },
+                    friends: [
+                        { name: 'jery', age: 35 },
+                        { name: 'tony', age: 28 },
+                    ],
+                    hobby:['玩游戏','刷视频','看电影'],
+                },
+
+            },
+            methods: {
+                //添加一个属性，默认值是男
+                addString() {
+                    // 添加一个属性为男
+                    //两种写法：
+                    this.$set(vm.student, 'sex', '男');
+                    // Vue.set(vm._data.student, 'sex', '女');
+                },
+                addStudy(){
+                    // 修改索引0的属性为学习
+                    // this.student.hobby.splice(0,1,'学习');
+                    this.$set(vm.student.hobby,0,'学习');
+                    // 修改索引1的属性为看书
+                    Vue.set(vm.student.hobby,1,'看书');
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

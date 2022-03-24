@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.模拟数组数据监测 </title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <!--
+			Vue监视数据的原理：
+				1. vue会监视data中所有层次的数据。
+
+				2. 如何监测对象中的数据？
+								通过setter实现监视，且要在new Vue时就传入要监测的数据。
+									(1).对象中后追加的属性，Vue默认不做响应式处理
+									(2).如需给后添加的属性做响应式，请使用如下API：
+													Vue.set(target，propertyName/index，value) 或 
+													vm.$set(target，propertyName/index，value)
+
+				3. 如何监测数组中的数据？
+									通过包裹数组更新元素的方法实现，本质就是做了两件事：
+										(1).调用原生对应的方法对数组进行更新。
+										(2).重新解析模板，进而更新页面。
+
+				4.在Vue修改数组中的某个元素一定要用如下方法：
+							1.使用这些API:push()、pop()、shift()、unshift()、splice()、sort()、reverse()
+							2.Vue.set() 或 vm.$set()
+				
+				特别注意：Vue.set() 和 vm.$set() 不能给vm 或 vm的根数据对象 添加属性！！！
+		-->
+    <div id="root">
+        <!-- 功能实现 -->
+        <button @click='student.age++'>点击年龄加1</button>
+        <button @click='addSex'>添加性别属性，默认值：男</button>
+        <button @click='student.sex = "未知" ' v-if='student.sex'>修改性别</button>
+        <button @click='addFirends'>在列表首位添加一个朋友</button>
+        <button @click='updateFriends'>修改第一个朋友的名字为张三</button>
+        <button @click='addhobby'>添加一个爱好</button>
+        <button @click='updatehobby'>修改第一个爱好为开车</button>
+        <button @click='filterhobby'>过滤爱好玩游戏</button>
+
+        <h2>学生信息</h2>
+        <p>姓名：{{student.name}}</p>
+        <p>年龄{{student.age}} </p>
+        <p v-if='student.sex'>性别：{{student.sex}}</p>
+        <hr />
+        <h2>爱好</h2>
+        <ul>
+            <!-- 循环获得数组 -->
+            <li v-for='(val,index) in student.hobby' :key="index">
+                {{val}}
+
+            </li>
+        </ul>
+        <hr />
+        <h2>朋友们</h2>
+        <ul>
+            <!-- 循环获得数组对象 -->
+            <li v-for='(val,index) in student.friends' :key="index">
+                {{val.name}}--{{val.age}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //数据绑定
+            data: {
+                student: {
+                    name: 'tom',
+                    age: 18,
+                    hobby: ['玩游戏', '刷视频', '看电影'],
+                    friends: [
+                        { name: 'jery', age: 35 },
+                        { name: 'tony', age: 28 },
+                    ],
+
+                },
+                //定义一个空数组
+                friends: {},
+            },
+            methods: {
+                addSex() {
+                    // this.$set(vm.student, 'sex', '男');
+                    Vue.set(vm.student, 'sex', '男')
+                },
+                addFirends() {
+                    this.student.friends.unshift({ name: '佩奇', age: 18 })
+                },
+                updateFriends() {
+                    this.student.friends[0].name = '张三';
+                },
+                addhobby() {
+                    this.student.hobby.push('学习');
+                },
+                updatehobby() {
+                    this.student.hobby.splice(0, 1, '学习');
+                    // this.$set(this.student.hobby,1,'看书')
+                },
+                filterhobby() {
+                    this.student.hobby = this.student.hobby.filter((k) => {
+                        return k !== '玩游戏';
+                    })
+                }
+
+            },
+
+
+        })
+
+    </script>
+</body>
+
+</html>
