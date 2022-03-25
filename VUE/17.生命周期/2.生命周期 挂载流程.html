@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue.js"></script>
+    <title>1.引出生命周期</title>
+
+</head>
+
+<body>
+    <div id="root" :x = 'n'>
+        <h2>{{n}}</h2>
+        <button @click="add">点我n+1</button>
+        <button @click="bye">点我销毁vm</button>
+    </div>
+
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            //指定容器
+            el: '#root',
+            //模板
+           /*  template: `
+                <div>
+                    <h2>{{n}}</h2>
+                    <button @click="add">点我n+1</button>
+                </div>
+            `, */
+            //数据绑定
+            data: {
+                n: 1,
+            },
+            methods: {
+                add() {
+                    console.log('add');
+                    this.n++;
+                },
+                bye(){
+                    console.log('bye');
+                    this.$destroy();
+                }
+            },
+            watch: {
+               n:{
+                   handler(newold,old){
+                       console.log('修改后的值为'+newold);
+                   }
+               }
+            },
+            //此时:无法通过vm访问到data中的数据、methods中的方法。
+            beforeCreate() {
+                console.log('beforeCreate');
+            },
+            created() {
+                console.log('created');
+            },
+            /* 1.此时，页面呈现的是未经Vue编译的DOM结构。
+            2.所有对DOM的操作，最终都不奏效。 */
+            beforeMount() {
+                console.log('beforeMount');
+                // document.querySelector('h2').innerText = 'haha'; 不生效
+            },
+            //Vue完成模板的解析并把初始的真实DOM元素放入页面后（挂载完毕）调用mounted
+            mounted() {
+                console.log('mounted',this.$el instanceof HTMLElement);
+                //document.querySelector('h2').innerText = '哈哈'; mounted阶段操作dom 会生效，但尽量避免
+
+            },
+            //此时:数据是新的，但页面是旧的，即:页面尚未和数据保持同步。
+            beforeUpdate() {
+                console.log('beforeUpdate');
+                
+            },
+            //此时:数据是新的，页面也是新的，即:贞面和数据保持同步。
+            updated() {
+                console.log('updated')
+                console.log(this.n);
+                this.n = 99;
+            },
+            beforeDestroy() {
+                console.log('beforeDestroy');
+                console.log(this.n);
+                this.add(); 
+
+            },
+            destroyed() {
+                console.log('destroyed');
+            },
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>

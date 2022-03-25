@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.组件的嵌套</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        
+    </div>
+
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+
+        //创建student组件
+        const  student = Vue.extend({
+            template:`
+            <div>
+                <h2>{{studentName}}</h2>
+                 <h2>{{age}}</h2>
+            </div> 
+            `,
+            data(){
+                return{
+                    studentName:'好运来',
+                    age:18,
+                }
+            }
+        });
+
+        // 创建school组件
+        const school = Vue.extend({
+           
+            // 创建html模板
+            template:
+                `<div>
+                    <h2>{{schoolName}}</h2>
+                    <h2>{{address}}</h2>
+                    <student></student>
+                </div>`,
+
+            //数据,必须是一个函数
+            data() {
+                return {
+                    schoolName: '尚硅谷',
+                    address: '北京',
+                }
+            },
+            //注册组件，局部组件
+            components:{
+                student,
+            }
+
+        });
+
+        //创建hello 组件
+        const hello = Vue.extend({
+            template:
+            `<div>
+                <h2>{{msg}}</h2>   
+            </div>`,
+
+            data(){
+                return{
+                    msg:'明天你好！'
+                }
+            }
+        });
+       
+        // 创建app组件
+        const app = Vue.extend({
+            template:`
+                <div>
+                    <hello></hello>
+                    <school></school>
+                </div>
+            `,
+            //注册组件（局部注册）
+            components:{
+                school,
+                hello,
+            }
+        });
+        
+        //指定容器
+        new Vue({
+            //指定容器
+            el: '#root',
+            //标签模板
+            template:`
+            <div>
+                <app></app>
+            </div> 
+            `,
+            //注册组件（局部注册）
+            components: {
+               app,  
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.一个重要的内置关系</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <school></school>
+    </div>
+
+    <script>
+        //生产环境提示关闭
+        Vue.config.productionTip = false;
+        Vue.prototype.x = 99;
+
+        //创建一个组件
+        const school = Vue.extend({
+            template:`
+                <div>
+                    <h2>{{schoolName}}</h2>
+                    <button @click="showX">点我获取vm的x</button>
+                </div>
+            `,
+            //数据
+            data() {
+                return {
+                    schoolName:'好运来',
+                }
+            },
+            methods: {
+                showX(){
+                    console.log(this);
+                }
+            }
+            
+        });
+
+        const vm = new Vue({
+        //指定容器
+            el:'#root',
+           
+            //注册组件
+            components:{
+                school,
+            },
+            
+        })
+       
+        console.log(school.prototype.__proto__ === Vue.prototype);//true
+
+       //创建一个构造函数
+       /* function Des(a,b){
+           this.a = a;
+           this.b = b;
+       }
+       var des = new Des();
+       Des.prototype.x = 15;
+       Des.prototype.sing = function(){
+           console.log('嫦娥');
+       }
+       
+       Des2.prototype = new Des();
+       var des2 = new Des2();
+       Des2.prototype.constructor = Des2;
+       //创建子构造函数
+       function Des2(a,b){
+           Des.call(this,1,2);
+       }
+
+      des2.sing();
+       console.log(des2.a);
+       console.log(Des.prototype);
+       console.log(des2); */
+       
+       /* console.log(Des.prototype === ds.__proto__);
+       console.log(Des.prototype);//显示原型对象
+       console.log(ds.__proto__);//隐式原型对象 */
+        
+    </script>
+</body>
+
+</html>
