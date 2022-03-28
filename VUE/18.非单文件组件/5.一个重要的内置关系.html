@@ -13,7 +13,10 @@
     <div id="root">
         <school></school>
     </div>
-
+<!-- 
+				1.一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+				2.为什么要有这个关系：让组件实例对象（vc）可以访问到 Vue原型上的属性、方法。
+		-->
     <script>
         //生产环境提示关闭
         Vue.config.productionTip = false;
